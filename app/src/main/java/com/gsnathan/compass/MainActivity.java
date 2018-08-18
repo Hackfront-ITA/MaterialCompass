@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 
@@ -26,9 +27,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.kobakei.ratethisapp.RateThisApp;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     GPSTracker gps;
     private boolean isFirstRun;
     private float currentAzimuth;
+    private ConstraintLayout mainLay;
+    private TextView toolbarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +98,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        toolbarView =  (TextView)findViewById(R.id.toolbar_view);
+        toolbarView.setText(R.string.toolbar_title);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setTitle("");
         compassView = (ImageView) findViewById(R.id.image_dial);
         degreeView = (TextView) findViewById(R.id.degree_view);
         coordView = (TextView) findViewById(R.id.coord_view);
+        mainLay = (ConstraintLayout) findViewById(R.id.main_layout);
+        if (useDarkTheme) {
+            mainLay.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+            toolbarView.setTextColor(getResources().getColor(R.color.colorWhite));
+        }
+        else {
+            mainLay.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            toolbarView.setTextColor(getResources().getColor(R.color.colorBlack));
+        }
     }
 
     @Override

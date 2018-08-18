@@ -3,6 +3,7 @@ package com.gsnathan.compass;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.*;
@@ -35,7 +36,7 @@ public class MyPreferencesActivity extends AppCompatPreferenceActivity {
         if (useDarkTheme) {
             setTheme(R.style.AppThemeDark);
             changeStatusBarColor(R.color.colorBlack);
-            getListView().setBackgroundColor(getResources().getColor(R.color.colorGrey));
+            getListView().setBackgroundColor(getResources().getColor(R.color.colorBlack));
         }
 
         int horizontalMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -91,11 +92,14 @@ public class MyPreferencesActivity extends AppCompatPreferenceActivity {
 
     private void setupActionBar() {
         getLayoutInflater().inflate(R.layout.toolbar, (ViewGroup) findViewById(android.R.id.content));
+        ((TextView)findViewById(R.id.toolbar_view)).setVisibility(View.GONE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setElevation(4);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        toolbar.setElevation(0);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorBlack));
         if (useDarkTheme) {
+            toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
             toolbar.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+            //upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
         }
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(getColoredArrow());
@@ -113,7 +117,10 @@ public class MyPreferencesActivity extends AppCompatPreferenceActivity {
         if (arrowDrawable != null && wrapped != null) {
             // This should avoid tinting all the arrows
             arrowDrawable.mutate();
-            DrawableCompat.setTint(wrapped, Color.WHITE);
+            if (useDarkTheme)
+                DrawableCompat.setTint(wrapped, Color.WHITE);
+            else
+                DrawableCompat.setTint(wrapped, Color.BLACK);
         }
 
         return wrapped;
@@ -124,7 +131,9 @@ public class MyPreferencesActivity extends AppCompatPreferenceActivity {
         super.onPostCreate(savedInstanceState);
 
         LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
+        root.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
+        root.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         root.addView(bar, 0); // insert at top
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

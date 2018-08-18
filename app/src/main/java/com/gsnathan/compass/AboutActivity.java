@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ public class AboutActivity extends AppCompatActivity {
     private final String APP_VERSION_RELEASE = "Version " + Utils.getAppVersion();   //contains Version + the version number
     private final String APP_VERSION_DEBUG = "Version " + Utils.getAppVersion() + "-debug";   //contains Version + the version number + debug
     private Toolbar toolbar;
+    private CoordinatorLayout aboutLay;
+    private boolean useDarkTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +34,13 @@ public class AboutActivity extends AppCompatActivity {
         initUI();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setTitle(R.string.toolbar_title);
     }
 
     private void changeTheme() {
         // Use the chosen theme
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useDarkTheme = preferences.getBoolean("theme_pref", false);
+        useDarkTheme = preferences.getBoolean("theme_pref", false);
         if (useDarkTheme) {
             setTheme(R.style.AppThemeDark);
         } else {
@@ -49,15 +52,21 @@ public class AboutActivity extends AppCompatActivity {
         //initialize the textview
         versionView = (TextView) findViewById(R.id.text_version);
         //initialize the toolbar
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar_about);
+        ((TextView)findViewById(R.id.toolbar_view)).setVisibility(View.GONE);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         // check if app is debug
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG)
             versionView.setText(APP_VERSION_DEBUG);
-        } else    //if app is release
-        {
+        else    //if app is release
             versionView.setText(APP_VERSION_RELEASE);
-        }
+
+        aboutLay = (CoordinatorLayout) findViewById(R.id.about_layout);
+        if (useDarkTheme)
+            aboutLay.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+        else
+            aboutLay.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+
     }
 
     public void showPriv(View v) {

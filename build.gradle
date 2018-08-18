@@ -2,7 +2,7 @@
 
 buildscript {
 
-    ext.androidx_version = '1.0.0-beta01'
+    ext.androidx_version = '1.0.0-rc01'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
     ext.constraintlayout_version = '1.1.0'
     ext.espresso_version = '3.1.0-alpha3'
@@ -12,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha06'
         
 
         // NOTE: Do not place your application dependencies here; they belong

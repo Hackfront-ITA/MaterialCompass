@@ -6,8 +6,8 @@ android {
         applicationId "com.gsnathan.compass"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 13
-        versionName "3.2"
+        versionCode 14
+        versionName "3.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,6 +27,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation "androidx.preference:preference:$androidx_version"
     implementation "androidx.cardview:cardview:$androidx_version"
+
     androidTestImplementation "androidx.test:runner:$androidx_testrunner_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
